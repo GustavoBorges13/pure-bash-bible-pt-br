@@ -44,6 +44,7 @@ Use `shell` para código que deve ser ignorado.
 ## Escrevendo testes
 
 O arquivo de teste pode ser visualizado aqui: https://github.com/dylanaraps/pure-bash-bible/blob/master/test.sh
+
 Ou aqui: https://github.com/GustavoBorges13/pure-bash-bible-pt-br/blob/main/test.sh (versão traduzida)
 
 Exemplo de teste:
