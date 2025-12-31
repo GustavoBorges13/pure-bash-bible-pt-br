@@ -1,4 +1,4 @@
-<p align="center"><b>NEW: <a href="https://github.com/dylanaraps/pure-sh-bible">pure sh bible (📖 A collection of pure POSIX sh alternatives to external processes).</a></b></p>
+<p align="center"><b>Progresso da tradução:</b> 0%</p>
 
 <br>
 
