@@ -1,4 +1,4 @@
-<p align="center"><b>Progresso da tradução:</b> 60%</p>
+<p align="center"><b>Progresso da tradução:</b> 60% - Falta traduzir os manuscript</p>
 
 <br>
 
