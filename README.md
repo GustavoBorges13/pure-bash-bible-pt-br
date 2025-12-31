@@ -1,15 +1,12 @@
-<p align="center"><b>Progresso da tradução:</b> 0%</p>
+<p align="center"><b>Progresso da tradução:</b> 60%</p>
 
 <br>
 
 <p align="center"><img src="https://raw.githubusercontent.com/odb/official-bash-logo/master/assets/Logos/Icons/PNG/512x512.png" width="200px"></p>
 <h1 align="center">pure bash bible</h1> <p
-align="center">A collection of pure bash alternatives to external
-processes.</p>
+align="center">Uma coleção de alternativas em bash puro para processos externos.</p>
 
-<p align="center"> <a
-href="https://travis-ci.com/dylanaraps/pure-bash-bible"><img
-src="https://travis-ci.com/dylanaraps/pure-bash-bible.svg?branch=master"></a>
+<p align="center">
 <a href="./LICENSE.md"><img
 src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
 </p>
@@ -20,186 +17,184 @@ src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
 <img src="https://s3.amazonaws.com/titlepages.leanpub.com/bash/hero" width="40%" align="right">
 </a>
 
-The goal of this book is to document commonly-known and lesser-known methods of doing various tasks using only built-in `bash` features. Using the snippets from this bible can help remove unneeded dependencies from scripts and in most cases make them faster. I came across these tips and discovered a few while developing [neofetch](https://github.com/dylanaraps/neofetch), [pxltrm](https://github.com/dylanaraps/pxltrm) and other smaller projects.
+O objetivo deste livro é documentar métodos comumente conhecidos e menos conhecidos de realizar várias tarefas usando apenas recursos nativos (built-in) do `bash`. Usar os trechos (snippets) desta bíblia pode ajudar a remover dependências desnecessárias de scripts e, na maioria dos casos, torná-los mais rápidos. Encontrei essas dicas e descobri algumas enquanto desenvolvia o [neofetch](https://github.com/dylanaraps/neofetch), [pxltrm](https://github.com/dylanaraps/pxltrm) e outros projetos menores.
 
-The snippets below are linted using `shellcheck` and tests have been written where applicable. Want to contribute? Read the [CONTRIBUTING.md](https://github.com/dylanaraps/pure-bash-bible/blob/master/CONTRIBUTING.md). It outlines how the unit tests work and what is required when adding snippets to the bible.
+Os trechos abaixo são verificados usando o `shellcheck` e testes foram escritos onde aplicável. Quer contribuir? Leia o [CONTRIBUTING.md](https://github.com/dylanaraps/pure-bash-bible/blob/master/CONTRIBUTING.md). Ele descreve como os testes unitários funcionam e o que é necessário ao adicionar trechos à bíblia.
 
-See something incorrectly described, buggy or outright wrong? Open an issue or send a pull request. If the bible is missing something, open an issue and a solution will be found.
+Viu algo descrito incorretamente, com bugs ou totalmente errado? Abra uma issue ou envie um pull request. Se a bíblia estiver faltando algo, abra uma issue e uma solução será encontrada.
 
 <br>
-<p align="center"><b>This book is also available to purchase on leanpub. https://leanpub.com/bash</b></p>
-<p align="center"><b>Or you can buy me a coffee.</b>
+<p align="center"><b>Este livro também está disponível para compra no leanpub. https://leanpub.com/bash</b></p>
+<p align="center"><b>Ou você pode me pagar um café.</b>
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V7QNJNKS3WYVS"><img src="https://img.shields.io/badge/don-paypal-yellow.svg"></a> <a href="https://www.patreon.com/dyla"><img src="https://img.shields.io/badge/don-patreon-yellow.svg"> </a><a href="https://liberapay.com/2211/"><img src="https://img.shields.io/badge/don-liberapay-yellow.svg"></a>
 </p>
 
 <br>
 
-# Table of Contents
+# Índice
 
 <!-- vim-markdown-toc GFM -->
 
-* [FOREWORD](#foreword)
+* [PREFÁCIO](#foreword)
 * [STRINGS](#strings)
-    * [Trim leading and trailing white-space from string](#trim-leading-and-trailing-white-space-from-string)
-    * [Trim all white-space from string and truncate spaces](#trim-all-white-space-from-string-and-truncate-spaces)
-    * [Use regex on a string](#use-regex-on-a-string)
-    * [Split a string on a delimiter](#split-a-string-on-a-delimiter)
-    * [Change a string to lowercase](#change-a-string-to-lowercase)
-    * [Change a string to uppercase](#change-a-string-to-uppercase)
-    * [Reverse a string case](#reverse-a-string-case)
-    * [Trim quotes from a string](#trim-quotes-from-a-string)
-    * [Strip all instances of pattern from string](#strip-all-instances-of-pattern-from-string)
-    * [Strip first occurrence of pattern from string](#strip-first-occurrence-of-pattern-from-string)
-    * [Strip pattern from start of string](#strip-pattern-from-start-of-string)
-    * [Strip pattern from end of string](#strip-pattern-from-end-of-string)
-    * [Percent-encode a string](#percent-encode-a-string)
-    * [Decode a percent-encoded string](#decode-a-percent-encoded-string)
-    * [Check if string contains a sub-string](#check-if-string-contains-a-sub-string)
-    * [Check if string starts with sub-string](#check-if-string-starts-with-sub-string)
-    * [Check if string ends with sub-string](#check-if-string-ends-with-sub-string)
+    * [Remover espaços em branco do início e fim da string](#trim-leading-and-trailing-white-space-from-string)
+    * [Remover todos os espaços em branco da string e truncar espaços](#trim-all-white-space-from-string-and-truncate-spaces)
+    * [Usar regex em uma string](#use-regex-on-a-string)
+    * [Dividir uma string em um delimitador](#split-a-string-on-a-delimiter)
+    * [Alterar uma string para minúsculas](#change-a-string-to-lowercase)
+    * [Alterar uma string para maiúsculas](#change-a-string-to-uppercase)
+    * [Inverter a caixa de uma string](#reverse-a-string-case)
+    * [Remover aspas de uma string](#trim-quotes-from-a-string)
+    * [Remover todas as instâncias de um padrão da string](#strip-all-instances-of-pattern-from-string)
+    * [Remover a primeira ocorrência de um padrão da string](#strip-first-occurrence-of-pattern-from-string)
+    * [Remover padrão do início da string](#strip-pattern-from-start-of-string)
+    * [Remover padrão do final da string](#strip-pattern-from-end-of-string)
+    * [Codificar uma string em percent-encode (URL)](#percent-encode-a-string)
+    * [Decodificar uma string percent-encoded](#decode-a-percent-encoded-string)
+    * [Verificar se a string contém uma substring](#check-if-string-contains-a-sub-string)
+    * [Verificar se a string começa com uma substring](#check-if-string-starts-with-sub-string)
+    * [Verificar se a string termina com uma substring](#check-if-string-ends-with-sub-string)
 * [ARRAYS](#arrays)
-    * [Reverse an array](#reverse-an-array)
-    * [Remove duplicate array elements](#remove-duplicate-array-elements)
-    * [Random array element](#random-array-element)
-    * [Cycle through an array](#cycle-through-an-array)
-    * [Toggle between two values](#toggle-between-two-values)
-* [LOOPS](#loops)
-    * [Loop over a range of numbers](#loop-over-a-range-of-numbers)
-    * [Loop over a variable range of numbers](#loop-over-a-variable-range-of-numbers)
-    * [Loop over an array](#loop-over-an-array)
-    * [Loop over an array with an index](#loop-over-an-array-with-an-index)
-    * [Loop over the contents of a file](#loop-over-the-contents-of-a-file)
-    * [Loop over files and directories](#loop-over-files-and-directories)
-* [FILE HANDLING](#file-handling)
-    * [Read a file to a string](#read-a-file-to-a-string)
-    * [Read a file to an array (*by line*)](#read-a-file-to-an-array-by-line)
-    * [Get the first N lines of a file](#get-the-first-n-lines-of-a-file)
-    * [Get the last N lines of a file](#get-the-last-n-lines-of-a-file)
-    * [Get the number of lines in a file](#get-the-number-of-lines-in-a-file)
-    * [Count files or directories in directory](#count-files-or-directories-in-directory)
-    * [Create an empty file](#create-an-empty-file)
-    * [Extract lines between two markers](#extract-lines-between-two-markers)
-* [FILE PATHS](#file-paths)
-    * [Get the directory name of a file path](#get-the-directory-name-of-a-file-path)
-    * [Get the base-name of a file path](#get-the-base-name-of-a-file-path)
-* [VARIABLES](#variables)
-    * [Assign and access a variable using a variable](#assign-and-access-a-variable-using-a-variable)
-    * [Name a variable based on another variable](#name-a-variable-based-on-another-variable)
-* [ESCAPE SEQUENCES](#escape-sequences)
-    * [Text Colors](#text-colors)
-    * [Text Attributes](#text-attributes)
-    * [Cursor Movement](#cursor-movement)
-    * [Erasing Text](#erasing-text)
-* [PARAMETER EXPANSION](#parameter-expansion)
-    * [Indirection](#indirection)
-    * [Replacement](#replacement)
-    * [Length](#length)
-    * [Expansion](#expansion)
-    * [Case Modification](#case-modification)
-    * [Default Value](#default-value)
-* [BRACE EXPANSION](#brace-expansion)
-    * [Ranges](#ranges)
-    * [String Lists](#string-lists)
-* [CONDITIONAL EXPRESSIONS](#conditional-expressions)
-    * [File Conditionals](#file-conditionals)
-    * [File Comparisons](#file-comparisons)
-    * [Variable Conditionals](#variable-conditionals)
-    * [Variable Comparisons](#variable-comparisons)
-* [ARITHMETIC OPERATORS](#arithmetic-operators)
-    * [Assignment](#assignment)
-    * [Arithmetic](#arithmetic)
-    * [Bitwise](#bitwise)
-    * [Logical](#logical)
-    * [Miscellaneous](#miscellaneous)
-* [ARITHMETIC](#arithmetic-1)
-    * [Simpler syntax to set variables](#simpler-syntax-to-set-variables)
-    * [Ternary Tests](#ternary-tests)
-* [TRAPS](#traps)
-    * [Do something on script exit](#do-something-on-script-exit)
-    * [Ignore terminal interrupt (CTRL+C, SIGINT)](#ignore-terminal-interrupt-ctrlc-sigint)
-    * [React to window resize](#react-to-window-resize)
-    * [Do something before every command](#do-something-before-every-command)
-    * [Do something when a shell function or a sourced file finishes executing](#do-something-when-a-shell-function-or-a-sourced-file-finishes-executing)
+    * [Inverter um array](#reverse-an-array)
+    * [Remover elementos duplicados do array](#remove-duplicate-array-elements)
+    * [Elemento aleatório do array](#random-array-element)
+    * [Ciclar através de um array](#cycle-through-an-array)
+    * [Alternar entre dois valores](#toggle-between-two-values)
+* [LOOPS (LAÇOS)](#loops)
+    * [Loop sobre um intervalo de números](#loop-over-a-range-of-numbers)
+    * [Loop sobre um intervalo variável de números](#loop-over-a-variable-range-of-numbers)
+    * [Loop sobre um array](#loop-over-an-array)
+    * [Loop sobre um array com índice](#loop-over-an-array-with-an-index)
+    * [Loop sobre o conteúdo de um arquivo](#loop-over-the-contents-of-a-file)
+    * [Loop sobre arquivos e diretórios](#loop-over-files-and-directories)
+* [MANIPULAÇÃO DE ARQUIVOS](#file-handling)
+    * [Ler um arquivo para uma string](#read-a-file-to-a-string)
+    * [Ler um arquivo para um array (*por linha*)](#read-a-file-to-an-array-by-line)
+    * [Obter as primeiras N linhas de um arquivo](#get-the-first-n-lines-of-a-file)
+    * [Obter as últimas N linhas de um arquivo](#get-the-last-n-lines-of-a-file)
+    * [Obter o número de linhas em um arquivo](#get-the-number-of-lines-in-a-file)
+    * [Contar arquivos ou diretórios em um diretório](#count-files-or-directories-in-directory)
+    * [Criar um arquivo vazio](#create-an-empty-file)
+    * [Extrair linhas entre dois marcadores](#extract-lines-between-two-markers)
+* [CAMINHOS DE ARQUIVO](#file-paths)
+    * [Obter o nome do diretório de um caminho de arquivo](#get-the-directory-name-of-a-file-path)
+    * [Obter o nome base de um caminho de arquivo](#get-the-base-name-of-a-file-path)
+* [VARIÁVEIS](#variables)
+    * [Atribuir e acessar uma variável usando uma variável](#assign-and-access-a-variable-using-a-variable)
+    * [Nomear uma variável com base em outra variável](#name-a-variable-based-on-another-variable)
+* [SEQUÊNCIAS DE ESCAPE](#escape-sequences)
+    * [Cores de Texto](#text-colors)
+    * [Atributos de Texto](#text-attributes)
+    * [Movimento do Cursor](#cursor-movement)
+    * [Apagando Texto](#erasing-text)
+* [EXPANSÃO DE PARÂMETROS](#parameter-expansion)
+    * [Indireção](#indirection)
+    * [Substituição](#replacement)
+    * [Comprimento](#length)
+    * [Expansão](#expansion)
+    * [Modificação de Caixa (Maiúscula/Minúscula)](#case-modification)
+    * [Valor Padrão](#default-value)
+* [EXPANSÃO DE CHAVES](#brace-expansion)
+    * [Intervalos](#ranges)
+    * [Listas de Strings](#string-lists)
+* [EXPRESSÕES CONDICIONAIS](#conditional-expressions)
+    * [Condicionais de Arquivo](#file-conditionals)
+    * [Comparações de Arquivo](#file-comparisons)
+    * [Condicionais de Variável](#variable-conditionals)
+    * [Comparações de Variável](#variable-comparisons)
+* [OPERADORES ARITMÉTICOS](#arithmetic-operators)
+    * [Atribuição](#assignment)
+    * [Aritmética](#arithmetic)
+    * [Bitwise (Bit a bit)](#bitwise)
+    * [Lógico](#logical)
+    * [Diversos](#miscellaneous)
+* [ARITMÉTICA](#arithmetic-1)
+    * [Sintaxe mais simples para definir variáveis](#simpler-syntax-to-set-variables)
+    * [Testes Ternários](#ternary-tests)
+* [TRAPS (ARMADILHAS)](#traps)
+    * [Fazer algo ao sair do script](#do-something-on-script-exit)
+    * [Ignorar interrupção do terminal (CTRL+C, SIGINT)](#ignore-terminal-interrupt-ctrlc-sigint)
+    * [Reagir ao redimensionamento da janela](#react-to-window-resize)
+    * [Fazer algo antes de cada comando](#do-something-before-every-command)
+    * [Fazer algo quando uma função shell ou arquivo carregado terminar de executar](#do-something-when-a-shell-function-or-a-sourced-file-finishes-executing)
 * [PERFORMANCE](#performance)
-    * [Disable Unicode](#disable-unicode)
-* [OBSOLETE SYNTAX](#obsolete-syntax)
+    * [Desativar Unicode](#disable-unicode)
+* [SINTAXE OBSOLETA](#obsolete-syntax)
     * [Shebang](#shebang)
-    * [Command Substitution](#command-substitution)
-    * [Function Declaration](#function-declaration)
-* [INTERNAL VARIABLES](#internal-variables)
-    * [Get the location to the `bash` binary](#get-the-location-to-the-bash-binary)
-    * [Get the version of the current running `bash` process](#get-the-version-of-the-current-running-bash-process)
-    * [Open the user's preferred text editor](#open-the-users-preferred-text-editor)
-    * [Get the name of the current function](#get-the-name-of-the-current-function)
-    * [Get the host-name of the system](#get-the-host-name-of-the-system)
-    * [Get the architecture of the Operating System](#get-the-architecture-of-the-operating-system)
-    * [Get the name of the Operating System / Kernel](#get-the-name-of-the-operating-system--kernel)
-    * [Get the current working directory](#get-the-current-working-directory)
-    * [Get the number of seconds the script has been running](#get-the-number-of-seconds-the-script-has-been-running)
-    * [Get a pseudorandom integer](#get-a-pseudorandom-integer)
-* [INFORMATION ABOUT THE TERMINAL](#information-about-the-terminal)
-    * [Get the terminal size in lines and columns (*from a script*)](#get-the-terminal-size-in-lines-and-columns-from-a-script)
-    * [Get the terminal size in pixels](#get-the-terminal-size-in-pixels)
-    * [Get the current cursor position](#get-the-current-cursor-position)
-* [CONVERSION](#conversion)
-    * [Convert a hex color to RGB](#convert-a-hex-color-to-rgb)
-    * [Convert an RGB color to hex](#convert-an-rgb-color-to-hex)
+    * [Substituição de Comando](#command-substitution)
+    * [Declaração de Função](#function-declaration)
+* [VARIÁVEIS INTERNAS](#internal-variables)
+    * [Obter a localização do binário `bash`](#get-the-location-to-the-bash-binary)
+    * [Obter a versão do processo `bash` atual em execução](#get-the-version-of-the-current-running-bash-process)
+    * [Abrir o editor de texto preferido do usuário](#open-the-users-preferred-text-editor)
+    * [Obter o nome da função atual](#get-the-name-of-the-current-function)
+    * [Obter o nome do host (hostname) do sistema](#get-the-host-name-of-the-system)
+    * [Obter a arquitetura do Sistema Operacional](#get-the-architecture-of-the-operating-system)
+    * [Obter o nome do Sistema Operacional / Kernel](#get-the-name-of-the-operating-system--kernel)
+    * [Obter o diretório de trabalho atual](#get-the-current-working-directory)
+    * [Obter o número de segundos que o script está rodando](#get-the-number-of-seconds-the-script-has-been-running)
+    * [Obter um inteiro pseudoaleatório](#get-a-pseudorandom-integer)
+* [INFORMAÇÕES SOBRE O TERMINAL](#information-about-the-terminal)
+    * [Obter o tamanho do terminal em linhas e colunas (*de um script*)](#get-the-terminal-size-in-lines-and-columns-from-a-script)
+    * [Obter o tamanho do terminal em pixels](#get-the-terminal-size-in-pixels)
+    * [Obter a posição atual do cursor](#get-the-current-cursor-position)
+* [CONVERSÃO](#conversion)
+    * [Converter uma cor hex para RGB](#convert-a-hex-color-to-rgb)
+    * [Converter uma cor RGB para hex](#convert-an-rgb-color-to-hex)
 * [CODE GOLF](#code-golf)
-    * [Shorter `for` loop syntax](#shorter-for-loop-syntax)
-    * [Shorter infinite loops](#shorter-infinite-loops)
-    * [Shorter function declaration](#shorter-function-declaration)
-    * [Shorter `if` syntax](#shorter-if-syntax)
-    * [Simpler `case` statement to set variable](#simpler-case-statement-to-set-variable)
-* [OTHER](#other)
-    * [Use `read` as an alternative to the `sleep` command](#use-read-as-an-alternative-to-the-sleep-command)
-    * [Check if a program is in the user's PATH](#check-if-a-program-is-in-the-users-path)
-    * [Get the current date using `strftime`](#get-the-current-date-using-strftime)
-    * [Get the username of the current user](#get-the-username-of-the-current-user)
-    * [Generate a UUID V4](#generate-a-uuid-v4)
-    * [Progress bars](#progress-bars)
-    * [Get the list of functions in a script](#get-the-list-of-functions-in-a-script)
-    * [Bypass shell aliases](#bypass-shell-aliases)
-    * [Bypass shell functions](#bypass-shell-functions)
-    * [Run a command in the background](#run-a-command-in-the-background)
-    * [Capture function return without command substitution](#capture-the-return-value-of-a-function-without-command-substitution)
-* [AFTERWORD](#afterword)
+    * [Sintaxe de loop `for` mais curta](#shorter-for-loop-syntax)
+    * [Loops infinitos mais curtos](#shorter-infinite-loops)
+    * [Declaração de função mais curta](#shorter-function-declaration)
+    * [Sintaxe `if` mais curta](#shorter-if-syntax)
+    * [Declaração `case` mais simples para definir variável](#simpler-case-statement-to-set-variable)
+* [OUTROS](#other)
+    * [Usar `read` como alternativa ao comando `sleep`](#use-read-as-an-alternative-to-the-sleep-command)
+    * [Verificar se um programa está no PATH do usuário](#check-if-a-program-is-in-the-users-path)
+    * [Obter a data atual usando `strftime`](#get-the-current-date-using-strftime)
+    * [Obter o nome de usuário do usuário atual](#get-the-username-of-the-current-user)
+    * [Gerar um UUID V4](#generate-a-uuid-v4)
+    * [Barras de progresso](#progress-bars)
+    * [Obter a lista de funções em um script](#get-the-list-of-functions-in-a-script)
+    * [Ignorar aliases do shell](#bypass-shell-aliases)
+    * [Ignorar funções do shell](#bypass-shell-functions)
+    * [Executar um comando em segundo plano (background)](#run-a-command-in-the-background)
+    * [Capturar o retorno de uma função sem substituição de comando](#capture-the-return-value-of-a-function-without-command-substitution)
+* [POSFÁCIO](#afterword)
 
 <!-- vim-markdown-toc -->
 
 <br>
 
 <!-- CHAPTER START -->
-# FOREWORD
+# PREFÁCIO
 
-A collection of pure `bash` alternatives to external processes and programs. The `bash` scripting language is more powerful than people realise and most tasks can be accomplished without depending on external programs.
+Uma coleção de alternativas em `bash` puro para processos e programas externos. A linguagem de script `bash` é mais poderosa do que as pessoas imaginam e a maioria das tarefas pode ser realizada sem depender de programas externos.
 
-Calling an external process in `bash` is expensive and excessive use will cause a noticeable slowdown. Scripts and programs written using built-in methods (*where applicable*) will be faster, require fewer dependencies and afford a better understanding of the language itself.
+Chamar um processo externo no `bash` é custoso e o uso excessivo causará uma lentidão perceptível. Scripts e programas escritos usando métodos nativos (*onde aplicável*) serão mais rápidos, exigirão menos dependências e proporcionarão uma melhor compreensão da própria linguagem.
 
-The contents of this book provide a reference for solving problems encountered when writing programs and scripts in `bash`. Examples are in function formats showcasing how to incorporate these solutions into code.
+O conteúdo deste livro fornece uma referência para resolver problemas encontrados ao escrever programas e scripts em `bash`. Os exemplos estão em formatos de função, mostrando como incorporar essas soluções ao código.
 
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
 # STRINGS
 
-## Trim leading and trailing white-space from string
+## Remover espaços em branco do início e fim da string
 
-This is an alternative to `sed`, `awk`, `perl` and other tools. The
-function below works by finding all leading and trailing white-space and
-removing it from the start and end of the string. The `:` built-in is used in place of a temporary variable.
+Esta é uma alternativa ao `sed`, `awk`, `perl` e outras ferramentas. A função abaixo funciona encontrando todos os espaços em branco no início e no fim e removendo-os da string. O comando interno (built-in) `:` é usado no lugar de uma variável temporária.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 trim_string() {
-    # Usage: trim_string "   example   string    "
+    # Utilização: trim_string "   string de exemplo    "
     : "${1#"${1%%[![:space:]]*}"}"
     : "${_%"${_##*[![:space:]]}"}"
     printf '%s\n' "$_"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ trim_string "    Hello,  World    "
@@ -211,18 +206,16 @@ John Black
 ```
 
 
-## Trim all white-space from string and truncate spaces
+## Remover todos os espaços em branco da string e truncar espaços
 
-This is an alternative to `sed`, `awk`, `perl` and other tools. The
-function below works by abusing word splitting to create a new string
-without leading/trailing white-space and with truncated spaces.
+Esta é uma alternativa ao `sed`, `awk`, `perl` e outras ferramentas. A função abaixo funciona abusando da divisão de palavras (word splitting) para criar uma nova string sem espaços iniciais/finais e com espaços truncados (comprimidos).
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 # shellcheck disable=SC2086,SC2048
 trim_all() {
-    # Usage: trim_all "   example   string    "
+    # Utilização: trim_all "   string de exemplo    "
     set -f
     set -- $*
     printf '%s\n' "$*"
@@ -230,7 +223,7 @@ trim_all() {
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ trim_all "    Hello,    World    "
@@ -241,44 +234,40 @@ $ trim_all "$name"
 John Black is my name.
 ```
 
-## Use regex on a string
+## Usar regex em uma string
 
-The result of `bash`'s regex matching can be used to replace `sed` for a
-large number of use-cases.
+O resultado da correspondência de regex do `bash` pode ser usado para substituir o `sed` em um grande número de casos de uso.
 
-**CAVEAT**: This is one of the few platform dependent `bash` features.
-`bash` will use whatever regex engine is installed on the user's system.
-Stick to POSIX regex features if aiming for compatibility.
+**AVISO**: Este é um dos poucos recursos do `bash` dependentes de plataforma. O `bash` usará qualquer motor de regex instalado no sistema do usuário. Atenha-se aos recursos de regex POSIX se o objetivo for compatibilidade.
 
-**CAVEAT**: This example only prints the first matching group. When using
-multiple capture groups some modification is needed.
+**AVISO**: Este exemplo imprime apenas o primeiro grupo correspondente. Ao usar múltiplos grupos de captura, alguma modificação é necessária.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 regex() {
-    # Usage: regex "string" "regex"
+    # Utilização: regex "string" "regex"
     [[ $1 =~ $2 ]] && printf '%s\n' "${BASH_REMATCH[1]}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
-$ # Trim leading white-space.
+$ # Remova os espaços em branco à esquerda.
 $ regex '    hello' '^\s*(.*)'
 hello
 
-$ # Validate a hex color.
+$ # Validar uma cor hexa
 $ regex "#FFFFFF" '^(#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3}))$'
 #FFFFFF
 
-$ # Validate a hex color (invalid).
+$ # Validar uma cor hexadecimal (inválida).
 $ regex "red" '^(#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3}))$'
-# no output (invalid)
+# resultado será sem nenhuma saída (inválido)
 ```
 
-**Example Usage in script:**
+**Exemplo de Uso em script:**
 
 ```shell
 is_hex_color() {
@@ -293,27 +282,27 @@ is_hex_color() {
 read -r color
 is_hex_color "$color" || color="#FFFFFF"
 
-# Do stuff.
+# Faça coisas.
 ```
 
 
-## Split a string on a delimiter
+## Dividir uma string em um delimitador
 
-**CAVEAT:** Requires `bash` 4+
+**AVISO:** Requer `bash` 4+
 
-This is an alternative to `cut`, `awk` and other tools.
+Esta é uma alternativa ao `cut`, `awk` e outras ferramentas.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 split() {
-   # Usage: split "string" "delimiter"
+   # Utilização: split "string" "delimitador"
    IFS=$'\n' read -d "" -ra arr <<< "${1//$2/$'\n'}"
    printf '%s\n' "${arr[@]}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ split "apples,oranges,pears,grapes" ","
@@ -329,7 +318,7 @@ $ split "1, 2, 3, 4, 5" ", "
 4
 5
 
-# Multi char delimiters work too!
+# Delimitadores com vários caracteres também funcionam!
 $ split "hello---world---my---name---is---john" "---"
 hello
 world
@@ -339,20 +328,20 @@ is
 john
 ```
 
-## Change a string to lowercase
+## Alterar uma string para minúsculas
 
-**CAVEAT:** Requires `bash` 4+
+**AVISO:** Requer `bash` 4+
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 lower() {
-    # Usage: lower "string"
+    # Utilização: lower "string"
     printf '%s\n' "${1,,}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ lower "HELLO"
@@ -365,20 +354,20 @@ $ lower "hello"
 hello
 ```
 
-## Change a string to uppercase
+## Alterar uma string para maiúsculas
 
-**CAVEAT:** Requires `bash` 4+
+**AVISO:** Requer `bash` 4+
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 upper() {
-    # Usage: upper "string"
+    # Utilização: upper "string"
     printf '%s\n' "${1^^}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ upper "hello"
@@ -391,20 +380,20 @@ $ upper "HELLO"
 HELLO
 ```
 
-## Reverse a string case
+## Inverter a caixa de uma string
 
-**CAVEAT:** Requires `bash` 4+
+**AVISO:** Requer `bash` 4+
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 reverse_case() {
-    # Usage: reverse_case "string"
+    # Utilização: reverse_case "string"
     printf '%s\n' "${1~~}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ reverse_case "hello"
@@ -417,19 +406,19 @@ $ reverse_case "HELLO"
 hello
 ```
 
-## Trim quotes from a string
+## Remover aspas de uma string
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 trim_quotes() {
-    # Usage: trim_quotes "string"
+    # Utilização: trim_quotes "string"
     : "${1//\'}"
     printf '%s\n' "${_//\"}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ var="'Hello', \"World\""
@@ -437,18 +426,18 @@ $ trim_quotes "$var"
 Hello, World
 ```
 
-## Strip all instances of pattern from string
+## Remover todas as instâncias de um padrão da string
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 strip_all() {
-    # Usage: strip_all "string" "pattern"
+    # Utilização: strip_all "string" "padrão"
     printf '%s\n' "${1//$2}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ strip_all "The Quick Brown Fox" "[aeiou]"
@@ -461,18 +450,18 @@ $ strip_all "The Quick Brown Fox" "Quick "
 The Brown Fox
 ```
 
-## Strip first occurrence of pattern from string
+## Remover a primeira ocorrência de um padrão da string
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 strip() {
-    # Usage: strip "string" "pattern"
+    # Utilização: strip "string" "padrão"
     printf '%s\n' "${1/$2}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ strip "The Quick Brown Fox" "[aeiou]"
@@ -482,49 +471,49 @@ $ strip "The Quick Brown Fox" "[[:space:]]"
 TheQuick Brown Fox
 ```
 
-## Strip pattern from start of string
+## Remover padrão do início da string
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 lstrip() {
-    # Usage: lstrip "string" "pattern"
+    # Utilização: lstrip "string" "padrão"
     printf '%s\n' "${1##$2}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ lstrip "The Quick Brown Fox" "The "
 Quick Brown Fox
 ```
 
-## Strip pattern from end of string
+## Remover padrão do final da string
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 rstrip() {
-    # Usage: rstrip "string" "pattern"
+    # Utilização: rstrip "string" "padrão"
     printf '%s\n' "${1%%$2}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ rstrip "The Quick Brown Fox" " Fox"
 The Quick Brown
 ```
 
-## Percent-encode a string
+## Codificar uma string em percent-encode (URL)
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 urlencode() {
-    # Usage: urlencode "string"
+    # Utilização: urlencode "string"
     local LC_ALL=C
     for (( i = 0; i < ${#1}; i++ )); do
         : "${1:i:1}"
@@ -542,91 +531,91 @@ urlencode() {
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ urlencode "https://github.com/dylanaraps/pure-bash-bible"
 https%3A%2F%2Fgithub.com%2Fdylanaraps%2Fpure-bash-bible
 ```
 
-## Decode a percent-encoded string
+## Decodificar uma string percent-encoded
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 urldecode() {
-    # Usage: urldecode "string"
+    # Utilização: urldecode "string"
     : "${1//+/ }"
     printf '%b\n' "${_//%/\\x}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ urldecode "https%3A%2F%2Fgithub.com%2Fdylanaraps%2Fpure-bash-bible"
 https://github.com/dylanaraps/pure-bash-bible
 ```
 
-## Check if string contains a sub-string
+## Verificar se a string contém uma substring
 
-**Using a test:**
+**Usando um teste:**
 
 ```shell
 if [[ $var == *sub_string* ]]; then
     printf '%s\n' "sub_string is in var."
 fi
 
-# Inverse (substring not in string).
+# Inverso (subcadeia não presente na cadeia).
 if [[ $var != *sub_string* ]]; then
     printf '%s\n' "sub_string is not in var."
 fi
 
-# This works for arrays too!
+# Isso também funciona para matrizes!
 if [[ ${arr[*]} == *sub_string* ]]; then
     printf '%s\n' "sub_string is in array."
 fi
 ```
 
-**Using a case statement:**
+**Usando uma declaração case:**
 
 ```shell
 case "$var" in
     *sub_string*)
-        # Do stuff
+        # Faça coisas
     ;;
 
     *sub_string2*)
-        # Do more stuff
+        # Faça mais coisas
     ;;
 
     *)
-        # Else
+        # Caso contrário (else)
     ;;
 esac
 ```
 
-## Check if string starts with sub-string
+## Verificar se a string começa com uma substring
 
 ```shell
 if [[ $var == sub_string* ]]; then
     printf '%s\n' "var starts with sub_string."
 fi
 
-# Inverse (var does not start with sub_string).
+# Inverso (var não começa com sub_string).
 if [[ $var != sub_string* ]]; then
     printf '%s\n' "var does not start with sub_string."
 fi
 ```
 
-## Check if string ends with sub-string
+## Verificar se a string termina com uma substring
 
 ```shell
 if [[ $var == *sub_string ]]; then
     printf '%s\n' "var ends with sub_string."
 fi
 
-# Inverse (var does not end with sub_string).
+# Inverso (var não termina com sub_string).
 if [[ $var != *sub_string ]]; then
     printf '%s\n' "var does not end with sub_string."
 fi
@@ -637,25 +626,24 @@ fi
 <!-- CHAPTER START -->
 # ARRAYS
 
-## Reverse an array
+## Inverter um array
 
-Enabling `extdebug` allows access to the `BASH_ARGV` array which stores
-the current function’s arguments in reverse.
+Habilitar o `extdebug` permite acesso ao array `BASH_ARGV`, que armazena os argumentos da função atual na ordem inversa.
 
-**CAVEAT**: Requires `shopt -s compat44` in `bash` 5.0+.
+**AVISO**: Requer `shopt -s compat44` no `bash` 5.0+.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 reverse_array() {
-    # Usage: reverse_array "array"
+    # Utilização: reverse_array “matriz”
     shopt -s extdebug
     f()(printf '%s\n' "${BASH_ARGV[@]}"); f "$@"
     shopt -u extdebug
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ reverse_array 1 2 3 4 5
@@ -672,21 +660,19 @@ blue
 red
 ```
 
-## Remove duplicate array elements
+## Remover elementos duplicados do array
 
-Create a temporary associative array. When setting associative array
-values and a duplicate assignment occurs, bash overwrites the key. This
-allows us to effectively remove array duplicates.
+Cria um array associativo temporário. Ao definir valores em arrays associativos e ocorrer uma atribuição duplicada, o bash sobrescreve a chave. Isso nos permite remover efetivamente duplicatas do array.
 
-**CAVEAT:** Requires `bash` 4+
+**AVISO:** Requer `bash` 4+
 
-**CAVEAT:** List order may not stay the same.
+**AVISO:** A ordem da lista pode não permanecer a mesma.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 remove_array_dups() {
-    # Usage: remove_array_dups "array"
+    # Utilização: remove_array_dups "array"
     declare -A tmp_array
 
     for i in "$@"; do
@@ -697,7 +683,7 @@ remove_array_dups() {
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ remove_array_dups 1 1 2 2 3 3 3 3 3 4 4 4 4 4 5 5 5 5 5 5
@@ -714,35 +700,33 @@ green
 blue
 ```
 
-## Random array element
+## Elemento aleatório do array
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 random_array_element() {
-    # Usage: random_array_element "array"
+    # Utilização: random_array_element "array"
     local arr=("$@")
     printf '%s\n' "${arr[RANDOM % $#]}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ array=(red green blue yellow brown)
 $ random_array_element "${array[@]}"
 yellow
 
-# Multiple arguments can also be passed.
+# Também é possível passar vários argumentos.
 $ random_array_element 1 2 3 4 5 6 7
 3
 ```
 
-## Cycle through an array
+## Ciclar através de um array
 
-Each time the `printf` is called, the next array element is printed. When
-the print hits the last array element it starts from the first element
-again.
+Cada vez que o `printf` é chamado, o próximo elemento do array é impresso. Quando a impressão atinge o último elemento do array, ela recomeça do primeiro elemento.
 
 ```sh
 arr=(a b c d)
@@ -754,9 +738,9 @@ cycle() {
 ```
 
 
-## Toggle between two values
+## Alternar entre dois valores
 
-This works the same as above, this is just a different use case.
+Isso funciona da mesma maneira que acima, é apenas um caso de uso diferente.
 
 ```sh
 arr=(true false)
@@ -770,59 +754,59 @@ cycle() {
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# LOOPS
+# LOOPS (LAÇOS)
 
-## Loop over a range of numbers
+## Loop sobre um intervalo de números
 
-Alternative to `seq`.
+Alternativa ao `seq`.
 
 ```shell
-# Loop from 0-100 (no variable support).
+# Loop de 0 a 100 (sem suporte a variáveis).
 for i in {0..100}; do
     printf '%s\n' "$i"
 done
 ```
 
-## Loop over a variable range of numbers
+## Loop sobre um intervalo variável de números
 
-Alternative to `seq`.
+Alternativa ao `seq`.
 
 ```shell
-# Loop from 0-VAR.
+# Loop de 0-VAR.
 VAR=50
 for ((i=0;i<=VAR;i++)); do
     printf '%s\n' "$i"
 done
 ```
 
-## Loop over an array
+## Loop sobre um array
 
 ```shell
 arr=(apples oranges tomatoes)
 
-# Just elements.
+# Apenas elementos.
 for element in "${arr[@]}"; do
     printf '%s\n' "$element"
 done
 ```
 
-## Loop over an array with an index
+## Loop sobre um array com um índice
 
 ```shell
 arr=(apples oranges tomatoes)
 
-# Elements and index.
+# Elementos e índice.
 for i in "${!arr[@]}"; do
     printf '%s\n' "${arr[i]}"
 done
 
-# Alternative method.
+# Método alternativo.
 for ((i=0;i<${#arr[@]};i++)); do
     printf '%s\n' "${arr[i]}"
 done
 ```
 
-## Loop over the contents of a file
+## Loop sobre o conteúdo de um arquivo
 
 ```shell
 while read -r line; do
@@ -830,32 +814,32 @@ while read -r line; do
 done < "file"
 ```
 
-## Loop over files and directories
+## Loop sobre arquivos e diretórios
 
-Don’t use `ls`.
+Não use o `ls`.
 
 ```shell
-# Greedy example.
+# Exemplo ganancioso.
 for file in *; do
     printf '%s\n' "$file"
 done
 
-# PNG files in dir.
+# Arquivos PNG no diretório.
 for file in ~/Pictures/*.png; do
     printf '%s\n' "$file"
 done
 
-# Iterate over directories.
+# Iterar sobre diretórios.
 for dir in ~/Downloads/*/; do
     printf '%s\n' "$dir"
 done
 
-# Brace Expansion.
+# Expansão da chaves.
 for file in /path/to/parentdir/{file1,file2,subdir/file3}; do
     printf '%s\n' "$file"
 done
 
-# Iterate recursively.
+# Itere recursivamente.
 shopt -s globstar
 for file in ~/Pictures/**/*; do
     printf '%s\n' "$file"
@@ -866,27 +850,27 @@ shopt -u globstar
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# FILE HANDLING
+# MANIPULAÇÃO DE ARQUIVOS
 
-**CAVEAT:** `bash` does not handle binary data properly in versions `< 4.4`.
+**AVISO:** O `bash` não lida corretamente com dados binários em versões `< 4.4`.
 
-## Read a file to a string
+## Ler um arquivo para uma string
 
-Alternative to the `cat` command.
+Alternativa ao comando `cat`.
 
 ```shell
 file_data="$(<"file")"
 ```
 
-## Read a file to an array (*by line*)
+## Ler um arquivo para um array (*por linha*)
 
-Alternative to the `cat` command.
+Alternativa ao comando `cat`.
 
 ```shell
-# Bash <4 (discarding empty lines).
+# Bash <4 (descartando linhas vazias).
 IFS=$'\n' read -d "" -ra file_data < "file"
 
-# Bash <4 (preserving empty lines).
+# Bash <4 (preservando linhas em branco).
 while read -r line; do
     file_data+=("$line")
 done < "file"
@@ -895,23 +879,23 @@ done < "file"
 mapfile -t file_data < "file"
 ```
 
-## Get the first N lines of a file
+## Obter as primeiras N linhas de um arquivo
 
-Alternative to the `head` command.
+Alternativa ao comando `head`.
 
-**CAVEAT:** Requires `bash` 4+
+**AVISO:** Requer `bash` 4+
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 head() {
-    # Usage: head "n" "file"
+    # Utilização: head “n” “arquivo”
     mapfile -tn "$1" line < "$2"
     printf '%s\n' "${line[@]}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ head 2 ~/.bashrc
@@ -922,54 +906,54 @@ $ head 1 ~/.bashrc
 # Prompt
 ```
 
-## Get the last N lines of a file
+## Obter as últimas N linhas de um arquivo
 
-Alternative to the `tail` command.
+Alternativa ao comando `tail`.
 
-**CAVEAT:** Requires `bash` 4+
+**AVISO:** Requer `bash` 4+
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 tail() {
-    # Usage: tail "n" "file"
+    # Utilização: tail “n” “arquivo”
     mapfile -tn 0 line < "$2"
     printf '%s\n' "${line[@]: -$1}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ tail 2 ~/.bashrc
-# Enable tmux.
+# Ativar o tmux.
 # [[ -z "$TMUX"  ]] && exec tmux
 
 $ tail 1 ~/.bashrc
 # [[ -z "$TMUX"  ]] && exec tmux
 ```
 
-## Get the number of lines in a file
+## Obter o número de linhas em um arquivo
 
-Alternative to `wc -l`.
+Alternativa ao `wc -l`.
 
-**Example Function (bash 4):**
+**Exemplo de Função (bash 4):**
 
 ```sh
 lines() {
-    # Usage: lines "file"
+    # Utilização: linhas “arquivo”
     mapfile -tn 0 lines < "$1"
     printf '%s\n' "${#lines[@]}"
 }
 ```
 
-**Example Function (bash 3):**
+**Exemplo de Função (bash 3):**
 
-This method uses less memory than the `mapfile` method and works in `bash` 3 but it is slower for bigger files.
+Este método usa menos memória que o método `mapfile` e funciona no `bash` 3, mas é mais lento para arquivos maiores.
 
 ```sh
 lines_loop() {
-    # Usage: lines_loop "file"
+    # Utilização: lines_loop “arquivo”
     count=0
     while IFS= read -r _; do
         ((count++))
@@ -978,7 +962,7 @@ lines_loop() {
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ lines ~/.bashrc
@@ -988,57 +972,57 @@ $ lines_loop ~/.bashrc
 48
 ```
 
-## Count files or directories in directory
+## Contar arquivos ou diretórios em um diretório
 
-This works by passing the output of the glob to the function and then counting the number of arguments.
+Isso funciona passando a saída do glob para a função e, em seguida, contando o número de argumentos.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 count() {
-    # Usage: count /path/to/dir/*
-    #        count /path/to/dir/*/
+    # Utilização: count /path/to/dir/*
+    #             count /path/to/dir/*/
     printf '%s\n' "$#"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
-# Count all files in dir.
+# Contar todos os arquivos no diretório.
 $ count ~/Downloads/*
 232
 
-# Count all dirs in dir.
+# Contar todas as pastas na pasta.
 $ count ~/Downloads/*/
 45
 
-# Count all jpg files in dir.
+# Contar todos os arquivos jpg no diretório.
 $ count ~/Pictures/*.jpg
 64
 ```
 
-## Create an empty file
+## Criar um arquivo vazio
 
-Alternative to `touch`.
+Alternativa ao `touch`.
 
 ```shell
-# Shortest.
+# Mais curto.
 >file
 
-# Longer alternatives:
+# Alternativas mais longas:
 :>file
 echo -n >file
 printf '' >file
 ```
 
-## Extract lines between two markers
+## Extrair linhas entre dois marcadores
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 extract() {
-    # Usage: extract file "opening marker" "closing marker"
+    # Utilização: extract arquivo “marcador de abertura” “marcador de fechamento”
     while IFS=$'\n' read -r line; do
         [[ $extract && $line != "$3" ]] &&
             printf '%s\n' "$line"
@@ -1049,28 +1033,28 @@ extract() {
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
-# Extract code blocks from MarkDown file.
+# Extrair blocos de código do arquivo MarkDown.
 $ extract ~/projects/pure-bash/README.md '```sh' '```'
-# Output here...
+# Saída aqui...
 ```
 
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# FILE PATHS
+# CAMINHOS DE ARQUIVO
 
-## Get the directory name of a file path
+## Obter o nome do diretório de um caminho de arquivo
 
-Alternative to the `dirname` command.
+Alternativa ao comando `dirname`.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 dirname() {
-    # Usage: dirname "path"
+    # Utilização: dirname “path/caminho”
     local tmp=${1:-.}
 
     [[ $tmp != *[!/]* ]] && {
@@ -1092,7 +1076,7 @@ dirname() {
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ dirname ~/Pictures/Wallpapers/1.jpg
@@ -1102,15 +1086,15 @@ $ dirname ~/Pictures/Downloads/
 /home/black/Pictures
 ```
 
-## Get the base-name of a file path
+## Obter o nome base de um caminho de arquivo
 
-Alternative to the `basename` command.
+Alternativa ao comando `basename`.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 basename() {
-    # Usage: basename "path" ["suffix"]
+    # Utilização: basename “path/caminho” [“sufixo”]
     local tmp
 
     tmp=${1%"${1##*[!/]}"}
@@ -1121,7 +1105,7 @@ basename() {
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ basename ~/Pictures/Wallpapers/1.jpg
@@ -1137,36 +1121,36 @@ Downloads
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# VARIABLES
+# VARIÁVEIS
 
-## Assign and access a variable using a variable
+## Atribuir e acessar uma variável usando uma variável
 
 ```shell
 $ hello_world="value"
 
-# Create the variable name.
+# Crie o nome da variável.
 $ var="world"
 $ ref="hello_$var"
 
-# Print the value of the variable name stored in 'hello_$var'.
+# Imprima o valor da variável nome armazenada em ‘hello_$var’.
 $ printf '%s\n' "${!ref}"
 value
 ```
 
-Alternatively, on `bash` 4.3+:
+Alternativamente, no `bash` 4.3+:
 
 ```shell
 $ hello_world="value"
 $ var="world"
 
-# Declare a nameref.
+# Declarar uma referência de nome (nameref).
 $ declare -n ref=hello_$var
 
 $ printf '%s\n' "$ref"
 value
 ```
 
-## Name a variable based on another variable
+## Nomear uma variável com base em outra variável
 
 ```shell
 $ var="world"
@@ -1178,177 +1162,177 @@ value
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# ESCAPE SEQUENCES
+# SEQUÊNCIAS DE ESCAPE
 
-Contrary to popular belief, there is no issue in utilizing raw escape sequences. Using `tput` abstracts the same ANSI sequences as if printed manually. Worse still, `tput` is not actually portable. There are a number of `tput` variants each with different commands and syntaxes (*try `tput setaf 3` on a FreeBSD system*). Raw sequences are fine.
+Ao contrário da crença popular, não há problema em utilizar sequências de escape brutas. Usar `tput` abstrai as mesmas sequências ANSI como se fossem impressas manualmente. Pior ainda, o `tput` não é realmente portável. Existem várias variantes do `tput`, cada uma com comandos e sintaxes diferentes (*tente `tput setaf 3` em um sistema FreeBSD*). Sequências brutas são aceitáveis.
 
-## Text Colors
+## Cores de Texto
 
-**NOTE:** Sequences requiring RGB values only work in True-Color Terminal Emulators.
+**NOTA:** Sequências que requerem valores RGB funcionam apenas em Emuladores de Terminal True-Color.
 
-| Sequence | What does it do? | Value |
+| Sequência | O que faz? | Valor |
 | -------- | ---------------- | ----- |
-| `\e[38;5;<NUM>m` | Set text foreground color. | `0-255`
-| `\e[48;5;<NUM>m` | Set text background color. | `0-255`
-| `\e[38;2;<R>;<G>;<B>m` | Set text foreground color to RGB color. | `R`, `G`, `B`
-| `\e[48;2;<R>;<G>;<B>m` | Set text background color to RGB color. | `R`, `G`, `B`
+| `\e[38;5;<NUM>m` | Define a cor do texto (primeiro plano). | `0-255`
+| `\e[48;5;<NUM>m` | Define a cor de fundo do texto. | `0-255`
+| `\e[38;2;<R>;<G>;<B>m` | Define a cor do texto para cor RGB. | `R`, `G`, `B`
+| `\e[48;2;<R>;<G>;<B>m` | Define a cor de fundo para cor RGB. | `R`, `G`, `B`
 
-## Text Attributes
+## Atributos de Texto
 
-**NOTE:** Prepend 2 to any code below to turn it's effect off
-(examples: 21=bold text off, 22=faint text off, 23=italic text off).
+**NOTA:** Adicione o prefixo 2 a qualquer código abaixo para desligar seu efeito
+(exemplos: 21=texto negrito desligado, 22=texto fraco desligado, 23=texto itálico desligado).
 
-| Sequence | What does it do? |
+| Sequência | O que faz? |
 | -------- | ---------------- |
-| `\e[m` | Reset text formatting and colors. |
-| `\e[1m` | Bold text. |
-| `\e[2m` | Faint text. |
-| `\e[3m` | Italic text. |
-| `\e[4m` | Underline text. |
-| `\e[5m` | Blinking text. |
-| `\e[7m` | Highlighted text. |
-| `\e[8m` | Hidden text. |
-| `\e[9m` | Strike-through text. |
+| `\e[m` | Redefine a formatação e as cores do texto. |
+| `\e[1m` | Texto em negrito. |
+| `\e[2m` | Texto fraco (faint). |
+| `\e[3m` | Texto em itálico. |
+| `\e[4m` | Texto sublinhado. |
+| `\e[5m` | Texto piscante. |
+| `\e[7m` | Texto realçado (cores invertidas). |
+| `\e[8m` | Texto oculto. |
+| `\e[9m` | Texto tachado (riscado). |
 
 
-## Cursor Movement
+## Movimento do Cursor
 
-| Sequence | What does it do? | Value |
+| Sequência | O que faz? | Valor |
 | -------- | ---------------- | ----- |
-| `\e[<LINE>;<COLUMN>H` | Move cursor to absolute position. | `line`, `column`
-| `\e[H` | Move cursor to home position (`0,0`). |
-| `\e[<NUM>A` | Move cursor up N lines. | `num`
-| `\e[<NUM>B` | Move cursor down N lines. | `num`
-| `\e[<NUM>C` | Move cursor right N columns. | `num`
-| `\e[<NUM>D` | Move cursor left N columns. | `num`
-| `\e[s` | Save cursor position. |
-| `\e[u` | Restore cursor position. |
+| `\e[<LINE>;<COLUMN>H` | Move o cursor para a posição absoluta. | `line`, `column`
+| `\e[H` | Move o cursor para a posição inicial (`0,0`). |
+| `\e[<NUM>A` | Move o cursor N linhas para cima. | `num`
+| `\e[<NUM>B` | Move o cursor N linhas para baixo. | `num`
+| `\e[<NUM>C` | Move o cursor N colunas para a direita. | `num`
+| `\e[<NUM>D` | Move o cursor N colunas para a esquerda. | `num`
+| `\e[s` | Salva a posição do cursor. |
+| `\e[u` | Restaura a posição do cursor. |
 
 
-## Erasing Text
+## Apagando Texto
 
-| Sequence | What does it do? |
+| Sequência | O que faz? |
 | -------- | ---------------- |
-| `\e[K` | Erase from cursor position to end of line.
-| `\e[1K` | Erase from cursor position to start of line.
-| `\e[2K` | Erase the entire current line.
-| `\e[J` | Erase from the current line to the bottom of the screen.
-| `\e[1J` | Erase from the current line to the top of the screen.
-| `\e[2J` | Clear the screen.
-| `\e[2J\e[H` | Clear the screen and move cursor to `0,0`.
+| `\e[K` | Apaga da posição do cursor até o final da linha.
+| `\e[1K` | Apaga da posição do cursor até o início da linha.
+| `\e[2K` | Apaga a linha atual inteira.
+| `\e[J` | Apaga da linha atual até o final da tela.
+| `\e[1J` | Apaga da linha atual até o topo da tela.
+| `\e[2J` | Limpa a tela.
+| `\e[2J\e[H` | Limpa a tela e move o cursor para `0,0`.
 
 
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# PARAMETER EXPANSION
+# EXPANSÃO DE PARÂMETROS
 
-## Indirection
+## Indireção
 
-| Parameter | What does it do? |
+| Parâmetro | O que faz? |
 | --------- | ---------------- |
-| `${!VAR}` | Access a variable based on the value of `VAR`.
-| `${!VAR*}` | Expand to `IFS` separated list of variable names starting with `VAR`. |
-| `${!VAR@}` | Expand to `IFS` separated list of variable names starting with `VAR`. If double-quoted, each variable name expands to a separate word. |
+| `${!VAR}` | Acessa uma variável com base no valor de `VAR`.
+| `${!VAR*}` | Expande para uma lista separada por `IFS` de nomes de variáveis que começam com `VAR`. |
+| `${!VAR@}` | Expande para uma lista separada por `IFS` de nomes de variáveis que começam com `VAR`. Se estiver entre aspas duplas, cada nome de variável se expande para uma palavra separada. |
 
 
-## Replacement
+## Substituição
 
-| Parameter | What does it do? |
+| Parâmetro | O que faz? |
 | --------- | ---------------- |
-| `${VAR#PATTERN}` | Remove shortest match of pattern from start of string. |
-| `${VAR##PATTERN}` | Remove longest match of pattern from start of string. |
-| `${VAR%PATTERN}` | Remove shortest match of pattern from end of string. |
-| `${VAR%%PATTERN}` | Remove longest match of pattern from end of string. |
-| `${VAR/PATTERN/REPLACE}` | Replace first match with string.
-| `${VAR//PATTERN/REPLACE}` | Replace all matches with string.
-| `${VAR/PATTERN}` | Remove first match.
-| `${VAR//PATTERN}` | Remove all matches.
+| `${VAR#PATTERN}` | Remove a correspondência mais curta do padrão do início da string. |
+| `${VAR##PATTERN}` | Remove a correspondência mais longa do padrão do início da string. |
+| `${VAR%PATTERN}` | Remove a correspondência mais curta do padrão do final da string. |
+| `${VAR%%PATTERN}` | Remove a correspondência mais longa do padrão do final da string. |
+| `${VAR/PATTERN/REPLACE}` | Substitui a primeira correspondência pela string.
+| `${VAR//PATTERN/REPLACE}` | Substitui todas as correspondências pela string.
+| `${VAR/PATTERN}` | Remove a primeira correspondência.
+| `${VAR//PATTERN}` | Remove todas as correspondências.
 
-## Length
+## Comprimento
 
-| Parameter | What does it do? |
+| Parâmetro | O que faz? |
 | --------- | ---------------- |
-| `${#VAR}` | Length of var in characters.
-| `${#ARR[@]}` | Length of array in elements.
+| `${#VAR}` | Comprimento da variável em caracteres.
+| `${#ARR[@]}` | Comprimento do array em elementos.
 
-## Expansion
+## Expansão
 
-| Parameter | What does it do? |
+| Parâmetro | O que faz? |
 | --------- | ---------------- |
-| `${VAR:OFFSET}` | Remove first `N` chars from variable.
-| `${VAR:OFFSET:LENGTH}` | Get substring from `N` character to `N` character. <br> (`${VAR:10:10}`: Get sub-string from char `10` to char `20`)
-| `${VAR:: OFFSET}` | Get first `N` chars from variable.
-| `${VAR:: -OFFSET}` | Remove last `N` chars from variable.
-| `${VAR: -OFFSET}` | Get last `N` chars from variable.
-| `${VAR:OFFSET:-OFFSET}` | Cut first `N` chars and last `N` chars. | `bash 4.2+` |
+| `${VAR:OFFSET}` | Remove os primeiros `N` caracteres da variável.
+| `${VAR:OFFSET:LENGTH}` | Obter substring do caractere `N` até o caractere `N` (tamanho). <br> (`${VAR:10:10}`: Obter sub-string do char `10` até o char `20`)
+| `${VAR:: OFFSET}` | Obter os primeiros `N` caracteres da variável.
+| `${VAR:: -OFFSET}` | Remove os últimos `N` caracteres da variável.
+| `${VAR: -OFFSET}` | Obter os últimos `N` caracteres da variável.
+| `${VAR:OFFSET:-OFFSET}` | Corta os primeiros `N` caracteres e os últimos `N` caracteres. | `bash 4.2+` |
 
-## Case Modification
+## Modificação de Caixa (Maiúscula/Minúscula)
 
-| Parameter | What does it do? | CAVEAT |
+| Parâmetro | O que faz? | AVISO |
 | --------- | ---------------- | ------ |
-| `${VAR^}` | Uppercase first character. | `bash 4+` |
-| `${VAR^^}` | Uppercase all characters. | `bash 4+` |
-| `${VAR,}` | Lowercase first character. | `bash 4+` |
-| `${VAR,,}` | Lowercase all characters. | `bash 4+` |
-| `${VAR~}` | Reverse case of first character. | `bash 4+` |
-| `${VAR~~}` | Reverse case of all characters. | `bash 4+` |
+| `${VAR^}` | Maiúscula no primeiro caractere. | `bash 4+` |
+| `${VAR^^}` | Maiúscula em todos os caracteres. | `bash 4+` |
+| `${VAR,}` | Minúscula no primeiro caractere. | `bash 4+` |
+| `${VAR,,}` | Minúscula em todos os caracteres. | `bash 4+` |
+| `${VAR~}` | Inverte a caixa do primeiro caractere. | `bash 4+` |
+| `${VAR~~}` | Inverte a caixa de todos os caracteres. | `bash 4+` |
 
 
-## Default Value
+## Valor Padrão
 
-| Parameter | What does it do? |
+| Parâmetro | O que faz? |
 | --------- | ---------------- |
-| `${VAR:-STRING}` | If `VAR` is empty or unset, use `STRING` as its value.
-| `${VAR-STRING}` | If `VAR` is unset, use `STRING` as its value.
-| `${VAR:=STRING}` | If `VAR` is empty or unset, set the value of `VAR` to `STRING`.
-| `${VAR=STRING}` | If `VAR` is unset, set the value of `VAR` to `STRING`.
-| `${VAR:+STRING}` | If `VAR` is not empty, use `STRING` as its value.
-| `${VAR+STRING}` | If `VAR` is set, use `STRING` as its value.
-| `${VAR:?STRING}` | Display an error if empty or unset.
-| `${VAR?STRING}` | Display an error if unset.
+| `${VAR:-STRING}` | Se `VAR` estiver vazia ou não definida, use `STRING` como seu valor.
+| `${VAR-STRING}` | Se `VAR` não estiver definida, use `STRING` como seu valor.
+| `${VAR:=STRING}` | Se `VAR` estiver vazia ou não definida, define o valor de `VAR` como `STRING`.
+| `${VAR=STRING}` | Se `VAR` não estiver definida, define o valor de `VAR` como `STRING`.
+| `${VAR:+STRING}` | Se `VAR` não estiver vazia, use `STRING` como seu valor.
+| `${VAR+STRING}` | Se `VAR` estiver definida, use `STRING` como seu valor.
+| `${VAR:?STRING}` | Exibe um erro se estiver vazia ou não definida.
+| `${VAR?STRING}` | Exibe um erro se não estiver definida.
 
 
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# BRACE EXPANSION
+# EXPANSÃO DE CHAVES
 
-## Ranges
+## Intervalos
 
 ```shell
-# Syntax: {<START>..<END>}
+# Sintaxe: {<INICIO>..<FIM>}
 
-# Print numbers 1-100.
+# Imprima os números de 1 a 100.
 echo {1..100}
 
-# Print range of floats.
+# Imprimir intervalo de valores flutuantes.
 echo 1.{1..9}
 
-# Print chars a-z.
+# Imprimir caracteres de a a z.
 echo {a..z}
 echo {A..Z}
 
-# Nesting.
+# Aninhamento.
 echo {A..Z}{0..9}
 
-# Print zero-padded numbers.
-# CAVEAT: bash 4+
+# Imprimir números com preenchimento zero.
+# AVISO: bash 4+
 echo {01..100}
 
-# Change increment amount.
-# Syntax: {<START>..<END>..<INCREMENT>}
-# CAVEAT: bash 4+
-echo {1..10..2} # Increment by 2.
+# Alterar valor do incremento.
+# Sintaxe: {<INICIO>..<FIM>..<INCREMENTO>}
+# AVISO: bash 4+
+echo {1..10..2} # Incrementar em 2.
 ```
 
-## String Lists
+## Listas de Strings
 
 ```shell
 echo {apples,oranges,pears,grapes}
 
-# Example Usage:
-# Remove dirs Movies, Music and ISOS from ~/Downloads/.
+# Exemplo de uso:
+# Remova as pastas Filmes, Música e ISOS de ~/Downloads/.
 rm -rf ~/Downloads/{Movies,Music,ISOS}
 ```
 
@@ -1357,192 +1341,192 @@ rm -rf ~/Downloads/{Movies,Music,ISOS}
 
 <!-- CHAPTER START -->
 
-# CONDITIONAL EXPRESSIONS
+# EXPRESSÕES CONDICIONAIS
 
-## File Conditionals
+## Condicionais de Arquivo
 
-| Expression | Value  | What does it do? |
+| Expressão | Valor  | O que faz? |
 | ---------- | ------ | ---------------- |
-| `-a`       | `file` | If file exists.
-| `-b`       | `file` | If file exists and is a block special file.
-| `-c`       | `file` | If file exists and is a character special file.
-| `-d`       | `file` | If file exists and is a directory.
-| `-e`       | `file` | If file exists.
-| `-f`       | `file` | If file exists and is a regular file.
-| `-g`       | `file` | If file exists and its set-group-id bit is set.
-| `-h`       | `file` | If file exists and is a symbolic link.
-| `-k`       | `file` | If file exists and its sticky-bit is set
-| `-p`       | `file` | If file exists and is a named pipe (*FIFO*).
-| `-r`       | `file` | If file exists and is readable.
-| `-s`       | `file` | If file exists and its size is greater than zero.
-| `-t`       | `fd`   | If file descriptor is open and refers to a terminal.
-| `-u`       | `file` | If file exists and its set-user-id bit is set.
-| `-w`       | `file` | If file exists and is writable.
-| `-x`       | `file` | If file exists and is executable.
-| `-G`       | `file` | If file exists and is owned by the effective group ID.
-| `-L`       | `file` | If file exists and is a symbolic link.
-| `-N`       | `file` | If file exists and has been modified since last read.
-| `-O`       | `file` | If file exists and is owned by the effective user ID.
-| `-S`       | `file` | If file exists and is a socket.
+| `-a`       | `file` | Se o arquivo existe.
+| `-b`       | `file` | Se o arquivo existe e é um arquivo especial de bloco.
+| `-c`       | `file` | Se o arquivo existe e é um arquivo especial de caractere.
+| `-d`       | `file` | Se o arquivo existe e é um diretório.
+| `-e`       | `file` | Se o arquivo existe.
+| `-f`       | `file` | Se o arquivo existe e é um arquivo regular.
+| `-g`       | `file` | Se o arquivo existe e seu bit set-group-id está definido.
+| `-h`       | `file` | Se o arquivo existe e é um link simbólico.
+| `-k`       | `file` | Se o arquivo existe e seu sticky-bit está definido.
+| `-p`       | `file` | Se o arquivo existe e é um pipe nomeado (*FIFO*).
+| `-r`       | `file` | Se o arquivo existe e é legível.
+| `-s`       | `file` | Se o arquivo existe e seu tamanho é maior que zero.
+| `-t`       | `fd`   | Se o descritor de arquivo está aberto e refere-se a um terminal.
+| `-u`       | `file` | Se o arquivo existe e seu bit set-user-id está definido.
+| `-w`       | `file` | Se o arquivo existe e é gravável (writable).
+| `-x`       | `file` | Se o arquivo existe e é executável.
+| `-G`       | `file` | Se o arquivo existe e pertence ao ID de grupo efetivo.
+| `-L`       | `file` | Se o arquivo existe e é um link simbólico.
+| `-N`       | `file` | Se o arquivo existe e foi modificado desde a última leitura.
+| `-O`       | `file` | Se o arquivo existe e pertence ao ID de usuário efetivo.
+| `-S`       | `file` | Se o arquivo existe e é um socket.
 
-## File Comparisons
+## Comparações de Arquivo
 
-| Expression | What does it do? |
+| Expressão | O que faz? |
 | ---------- | ---------------- |
-| `file -ef file2` | If both files refer to the same inode and device numbers.
-| `file -nt file2` | If `file` is newer than `file2` (*uses modification time*) or `file` exists and `file2` does not.
-| `file -ot file2` | If `file` is older than `file2` (*uses modification time*) or `file2` exists and `file` does not.
+| `file -ef file2` | Se ambos os arquivos referem-se ao mesmo inode e números de dispositivo.
+| `file -nt file2` | Se `file` é mais novo que `file2` (*usa o tempo de modificação*) ou `file` existe e `file2` não.
+| `file -ot file2` | Se `file` é mais velho que `file2` (*usa o tempo de modificação*) ou `file2` existe e `file` não.
 
-## Variable Conditionals
+## Condicionais de Variável
 
-| Expression | Value | What does it do? |
+| Expressão | Valor | O que faz? |
 | ---------- | ----- | ---------------- |
-| `-o`       | `opt` | If shell option is enabled.
-| `-v`       | `var` | If variable has a value assigned.
-| `-R`       | `var` | If variable is a name reference.
-| `-z`       | `var` | If the length of string is zero.
-| `-n`       | `var` | If the length of string is non-zero.
+| `-o`       | `opt` | Se a opção do shell está habilitada.
+| `-v`       | `var` | Se a variável tem um valor atribuído.
+| `-R`       | `var` | Se a variável é uma referência de nome (nameref).
+| `-z`       | `var` | Se o comprimento da string é zero.
+| `-n`       | `var` | Se o comprimento da string é diferente de zero.
 
-## Variable Comparisons
+## Comparações de Variável
 
-| Expression | What does it do? |
+| Expressão | O que faz? |
 | ---------- | ---------------- |
-| `var = var2` | Equal to.
-| `var == var2` | Equal to (*synonym for `=`*).
-| `var != var2` | Not equal to.
-| `var < var2` | Less than (*in ASCII alphabetical order.*)
-| `var > var2` | Greater than (*in ASCII alphabetical order.*)
+| `var = var2` | Igual a.
+| `var == var2` | Igual a (*sinônimo para `=`*).
+| `var != var2` | Diferente de.
+| `var < var2` | Menor que (*em ordem alfabética ASCII.*)
+| `var > var2` | Maior que (*em ordem alfabética ASCII.*)
 
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
 
-# ARITHMETIC OPERATORS
+# OPERADORES ARITMÉTICOS
 
-## Assignment
+## Atribuição
 
-| Operators | What does it do? |
+| Operadores | O que faz? |
 | --------- | ---------------- |
-| `=`       | Initialize or change the value of a variable.
+| `=`       | Inicializa ou altera o valor de uma variável.
 
-## Arithmetic
+## Aritmética
 
-| Operators | What does it do? |
+| Operadores | O que faz? |
 | --------- | ---------------- |
-| `+` | Addition
-| `-` | Subtraction
-| `*` | Multiplication
-| `/` | Division
-| `**` | Exponentiation
-| `%` | Modulo
-| `+=` | Plus-Equal (*Increment a variable.*)
-| `-=` | Minus-Equal (*Decrement a variable.*)
-| `*=` | Times-Equal (*Multiply a variable.*)
-| `/=` | Slash-Equal (*Divide a variable.*)
-| `%=` | Mod-Equal (*Remainder of dividing a variable.*)
+| `+` | Adição
+| `-` | Subtração
+| `*` | Multiplicação
+| `/` | Divisão
+| `**` | Exponenciação
+| `%` | Módulo (Resto)
+| `+=` | Mais-Igual (*Incrementa uma variável.*)
+| `-=` | Menos-Igual (*Decrementa uma variável.*)
+| `*=` | Vezes-Igual (*Multiplica uma variável.*)
+| `/=` | Barra-Igual (*Divide uma variável.*)
+| `%=` | Mod-Igual (*Resto da divisão de uma variável.*)
 
-## Bitwise
+## Bitwise (Bit a bit)
 
-| Operators | What does it do? |
+| Operadores | O que faz? |
 | --------- | ---------------- |
-| `<<` | Bitwise Left Shift
+| `<<` | Bitwise Left Shift (Deslocamento à Esquerda)
 | `<<=` | Left-Shift-Equal
-| `>>` | Bitwise Right Shift
+| `>>` | Bitwise Right Shift (Deslocamento à Direita)
 | `>>=` | Right-Shift-Equal
-| `&` | Bitwise AND
+| `&` | Bitwise AND (E)
 | `&=` | Bitwise AND-Equal
-| `\|` | Bitwise OR
+| `\|` | Bitwise OR (OU)
 | `\|=` | Bitwise OR-Equal
-| `~` | Bitwise NOT
-| `^` | Bitwise XOR
+| `~` | Bitwise NOT (NÃO)
+| `^` | Bitwise XOR (OU Exclusivo)
 | `^=` | Bitwise XOR-Equal
 
-## Logical
+## Lógico
 
-| Operators | What does it do? |
+| Operadores | O que faz? |
 | --------- | ---------------- |
-| `!` | NOT
-| `&&` | AND
-| `\|\|` | OR
+| `!` | NOT (NÃO)
+| `&&` | AND (E)
+| `\|\|` | OR (OU)
 
-## Miscellaneous
+## Diversos
 
-| Operators | What does it do? | Example |
+| Operadores | O que faz? | Exemplo |
 | --------- | ---------------- | ------- |
-| `,` | Comma Separator | `((a=1,b=2,c=3))`
+| `,` | Separador por vírgula | `((a=1,b=2,c=3))`
 
 
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# ARITHMETIC
+# ARITMÉTICA
 
-## Simpler syntax to set variables
+## Sintaxe mais simples para definir variáveis
 
 ```shell
-# Simple math
+# Matemática simples
 ((var=1+2))
 
-# Decrement/Increment variable
+# Variável de decremento/incremento
 ((var++))
 ((var--))
 ((var+=1))
 ((var-=1))
 
-# Using variables
+# Usando variáveis
 ((var=var2*arr[2]))
 ```
 
-## Ternary Tests
+## Testes Ternários
 
 ```shell
-# Set the value of var to var2 if var2 is greater than var.
-# var: variable to set.
-# var2>var: Condition to test.
-# ?var2: If the test succeeds.
-# :var: If the test fails.
+# Defina o valor de var como var2 se var2 for maior que var.
+# var: variável a ser definida.
+# var2>var: Condição a ser testada.
+# ?var2: Se o teste for bem-sucedido.
+# :var: Se o teste falhar.
 ((var=var2>var?var2:var))
 ```
 
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# TRAPS
+# TRAPS (ARMADILHAS)
 
-Traps allow a script to execute code on various signals. In [pxltrm](https://github.com/dylanaraps/pxltrm) (*a pixel art editor written in bash*)  traps are used to redraw the user interface on window resize. Another use case is cleaning up temporary files on script exit.
+Traps permitem que um script execute código em vários sinais. No [pxltrm](https://github.com/dylanaraps/pxltrm) (*um editor de pixel art escrito em bash*), traps são usados para redesenhar a interface do usuário no redimensionamento da janela. Outro caso de uso é a limpeza de arquivos temporários na saída do script.
 
-Traps should be added near the start of scripts so any early errors are also caught.
+Traps devem ser adicionados perto do início dos scripts para que quaisquer erros iniciais também sejam capturados.
 
-**NOTE:** For a full list of signals, see `trap -l`.
+**NOTA:** Para uma lista completa de sinais, veja `trap -l`.
 
 
-## Do something on script exit
+## Fazer algo ao sair do script
 
 ```shell
-# Clear screen on script exit.
+# Limpar a tela ao sair do script.
 trap 'printf \\e[2J\\e[H\\e[m' EXIT
 ```
 
-## Ignore terminal interrupt (CTRL+C, SIGINT)
+## Ignorar interrupção do terminal (CTRL+C, SIGINT)
 
 ```shell
 trap '' INT
 ```
 
-## React to window resize
+## Reagir ao redimensionamento da janela
 
 ```shell
-# Call a function on window resize.
+# Chame uma função ao redimensionar a janela.
 trap 'code_here' SIGWINCH
 ```
 
-## Do something before every command
+## Fazer algo antes de cada comando
 
 ```shell
 trap 'code_here' DEBUG
 ```
 
-## Do something when a shell function or a sourced file finishes executing
+## Fazer algo quando uma função shell ou arquivo carregado terminar de executar
 
 ```shell
 trap 'code_here' RETURN
@@ -1553,12 +1537,12 @@ trap 'code_here' RETURN
 <!-- CHAPTER START -->
 # PERFORMANCE
 
-## Disable Unicode
+## Desativar Unicode
 
-If unicode is not required, it can be disabled for a performance increase. Results may vary however there have been noticeable improvements in [neofetch](https://github.com/dylanaraps/neofetch) and other programs.
+Se o unicode não for necessário, ele pode ser desativado para um aumento de desempenho. Os resultados podem variar, no entanto, houve melhorias notáveis no [neofetch](https://github.com/dylanaraps/neofetch) e em outros programas.
 
 ```shell
-# Disable unicode.
+# Desativar unicode.
 LC_ALL=C
 LANG=C
 ```
@@ -1566,54 +1550,54 @@ LANG=C
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# OBSOLETE SYNTAX
+# SINTAXE OBSOLETA
 
 ## Shebang
 
-Use `#!/usr/bin/env bash` instead of `#!/bin/bash`.
+Use `#!/usr/bin/env bash` em vez de `#!/bin/bash`.
 
-- The former searches the user's `PATH` to find the `bash` binary.
-- The latter assumes it is always installed to `/bin/` which can cause issues.
+- O primeiro pesquisa no `PATH` do usuário para encontrar o binário `bash`.
+- O último assume que ele está sempre instalado em `/bin/`, o que pode causar problemas.
 
-**NOTE**: There are times when one may have a good reason for using `#!/bin/bash` or another direct path to the binary.
+**NOTA**: Há momentos em que se pode ter um bom motivo para usar `#!/bin/bash` ou outro caminho direto para o binário.
 
 
 ```shell
-# Right:
+# Certo:
 
     #!/usr/bin/env bash
 
-# Less right:
+# Menos certo:
 
     #!/bin/bash
 ```
 
-## Command Substitution
+## Substituição de Comando
 
-Use `$()` instead of `` ` ` ``.
+Use `$()` em vez de `` ` ` ``.
 
 ```shell
-# Right.
+# Certo.
 var="$(command)"
 
-# Wrong.
+# Errado.
 var=`command`
 
-# $() can easily be nested whereas `` cannot.
+# $() pode ser facilmente aninhado, enquanto `` não pode.
 var="$(command "$(command)")"
 ```
 
-## Function Declaration
+## Declaração de Função
 
-Do not use the `function` keyword, it reduces compatibility with older versions of `bash`.
+Não use a palavra-chave `function`, isso reduz a compatibilidade com versões mais antigas do `bash`.
 
 ```shell
-# Right.
+# Certo.
 do_something() {
     # ...
 }
 
-# Wrong.
+# Errado.
 function do_something() {
     # ...
 }
@@ -1622,92 +1606,91 @@ function do_something() {
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# INTERNAL VARIABLES
+# VARIÁVEIS INTERNAS
 
-## Get the location to the `bash` binary
+## Obter a localização do binário `bash`
 
 ```shell
 "$BASH"
 ```
 
-## Get the version of the current running `bash` process
+## Obter a versão do processo `bash` atual em execução
 
 ```shell
-# As a string.
+# Como uma string.
 "$BASH_VERSION"
 
-# As an array.
+# Como um array.
 "${BASH_VERSINFO[@]}"
 ```
 
-## Open the user's preferred text editor
+## Abrir o editor de texto preferido do usuário
 
 ```shell
 "$EDITOR" "$file"
 
-# NOTE: This variable may be empty, set a fallback value.
+# NOTA: Esta variável pode estar vazia, defina um valor alternativo.
 "${EDITOR:-vi}" "$file"
 ```
 
-## Get the name of the current function
+## Obter o nome da função atual
 
 ```shell
-# Current function.
+# Função atual.
 "${FUNCNAME[0]}"
 
-# Parent function.
+# Função pai.
 "${FUNCNAME[1]}"
 
-# So on and so forth.
+# E assim por diante.
 "${FUNCNAME[2]}"
 "${FUNCNAME[3]}"
 
-# All functions including parents.
+# Todas as funções, incluindo pais.
 "${FUNCNAME[@]}"
 ```
 
-## Get the host-name of the system
+## Obter o nome do host (hostname) do sistema
 
 ```shell
 "$HOSTNAME"
 
-# NOTE: This variable may be empty.
-# Optionally set a fallback to the hostname command.
+# NOTA: Esta variável pode estar vazia.
+# Opcionalmente, defina um fallback para o comando hostname.
 "${HOSTNAME:-$(hostname)}"
 ```
 
-## Get the architecture of the Operating System
+## Obter a arquitetura do Sistema Operacional
 
 ```shell
 "$HOSTTYPE"
 ```
 
-## Get the name of the Operating System / Kernel
+## Obter o nome do Sistema Operacional / Kernel
 
-This can be used to add conditional support for different Operating
-Systems without needing to call `uname`.
+Isso pode ser usado para adicionar suporte condicional para diferentes Sistemas Operacionais sem precisar chamar o `uname`.
 
 ```shell
 "$OSTYPE"
 ```
 
-## Get the current working directory
+## Obter o diretório de trabalho atual
 
-This is an alternative to the `pwd` built-in.
+Esta é uma alternativa ao comando interno `pwd`.
 
 ```shell
 "$PWD"
 ```
 
-## Get the number of seconds the script has been running
+## Obter o número de segundos que o script está rodando
 
 ```shell
 "$SECONDS"
 ```
 
-## Get a pseudorandom integer
+## Obter um inteiro pseudoaleatório
 
-Each time `$RANDOM` is used, a different integer between `0` and `32767` is returned. This variable should not be used for anything related to security (*this includes encryption keys etc*).
+Cada vez que `$RANDOM` é usado, um inteiro diferente entre `0` e `32767` é retornado. Esta variável não deve ser usada para nada relacionado à segurança (*isso inclui chaves de criptografia, etc*).
 
 
 ```shell
@@ -1717,79 +1700,78 @@ Each time `$RANDOM` is used, a different integer between `0` and `32767` is retu
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# INFORMATION ABOUT THE TERMINAL
+# INFORMAÇÕES SOBRE O TERMINAL
 
-## Get the terminal size in lines and columns (*from a script*)
+## Obter o tamanho do terminal em linhas e colunas (*de um script*)
 
-This is handy when writing scripts in pure bash and `stty`/`tput` can’t be
-called.
+Isso é útil ao escrever scripts em bash puro e quando `stty`/`tput` não podem ser chamados.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 get_term_size() {
-    # Usage: get_term_size
+    # Utilização: get_term_size
 
-    # (:;:) is a micro sleep to ensure the variables are
-    # exported immediately.
+    # (:;:) é um micro-sono para garantir que as variáveis sejam
+    # exportadas imediatamente.
     shopt -s checkwinsize; (:;:)
     printf '%s\n' "$LINES $COLUMNS"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
-# Output: LINES COLUMNS
+# Saída: LINHAS COLUNAS
 $ get_term_size
 15 55
 ```
 
-## Get the terminal size in pixels
+## Obter o tamanho do terminal em pixels
 
-**CAVEAT**: This does not work in some terminal emulators.
+**AVISO**: Isso não funciona em alguns emuladores de terminal.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 get_window_size() {
-    # Usage: get_window_size
+    # Utilização: get_window_size
     printf '%b' "${TMUX:+\\ePtmux;\\e}\\e[14t${TMUX:+\\e\\\\}"
     IFS=';t' read -d t -t 0.05 -sra term_size
     printf '%s\n' "${term_size[1]}x${term_size[2]}"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
-# Output: WIDTHxHEIGHT
+# Saída: LARGURA x ALTURA       (WIDTHxHEIGHT)
 $ get_window_size
 1200x800
 
-# Output (fail):
+# Saída (falha):
 $ get_window_size
 x
 ```
 
-## Get the current cursor position
+## Obter a posição atual do cursor
 
-This is useful when creating a TUI in pure bash.
+Isso é útil ao criar uma TUI (Interface de Usuário baseada em Texto) em bash puro.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 get_cursor_pos() {
-    # Usage: get_cursor_pos
+    # Utilização: get_cursor_pos
     IFS='[;' read -p $'\e[6n' -d R -rs _ y x _
     printf '%s\n' "$x $y"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
-# Output: X Y
+# Saída: X Y
 $ get_cursor_pos
 1 8
 ```
@@ -1797,23 +1779,23 @@ $ get_cursor_pos
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# CONVERSION
+# CONVERSÃO
 
-## Convert a hex color to RGB
+## Converter uma cor hex para RGB
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 hex_to_rgb() {
-    # Usage: hex_to_rgb "#FFFFFF"
-    #        hex_to_rgb "000000"
+    # Utilização: hex_to_rgb “#FFFFFF”
+    #             hex_to_rgb “000000”
     : "${1/\#}"
     ((r=16#${_:0:2},g=16#${_:2:2},b=16#${_:4:2}))
     printf '%s\n' "$r $g $b"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ hex_to_rgb "#FFFFFF"
@@ -1821,18 +1803,18 @@ $ hex_to_rgb "#FFFFFF"
 ```
 
 
-## Convert an RGB color to hex
+## Converter uma cor RGB para hex
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 rgb_to_hex() {
-    # Usage: rgb_to_hex "r" "g" "b"
+    # Utilização: rgb_to_hex "r" "g" "b"
     printf '#%02x%02x%02x\n' "$1" "$2" "$3"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ rgb_to_hex "255" "255" "255"
@@ -1842,79 +1824,79 @@ $ rgb_to_hex "255" "255" "255"
 
 # CODE GOLF
 
-## Shorter `for` loop syntax
+## Sintaxe de loop `for` mais curta
 
 ```shell
-# Tiny C Style.
+# Estilo Tiny C.
 for((;i++<10;)){ echo "$i";}
 
-# Undocumented method.
+# Método não documentado.
 for i in {1..10};{ echo "$i";}
 
-# Expansion.
+# Expansão.
 for i in {1..10}; do echo "$i"; done
 
-# C Style.
+# Estilo C.
 for((i=0;i<=10;i++)); do echo "$i"; done
 ```
 
-## Shorter infinite loops
+## Loops infinitos mais curtos
 
 ```shell
-# Normal method
+# Método normal
 while :; do echo hi; done
 
-# Shorter
+# Mais curto
 for((;;)){ echo hi;}
 ```
 
-## Shorter function declaration
+## Declaração de função mais curta
 
 ```shell
-# Normal method
+# Método normal
 f(){ echo hi;}
 
-# Using a subshell
+# Usando um subshell
 f()(echo hi)
 
-# Using arithmetic
-# This can be used to assign integer values.
-# Example: f a=1
+# Usando aritmética
+# Isso pode ser usado para atribuir valores inteiros.
+# Exemplo: f a=1
 #          f a++
 f()(($1))
 
-# Using tests, loops etc.
-# NOTE: ‘while’, ‘until’, ‘case’, ‘(())’, ‘[[]]’ can also be used.
+# Usando testes, loops, etc.
+# NOTA: “while”, “until”, “case”, “(())”, “[[]]” também podem ser usados.
 f()if true; then echo "$1"; fi
 f()for i in "$@"; do echo "$i"; done
 ```
 
-## Shorter `if` syntax
+## Sintaxe `if` mais curta
 
 ```shell
-# One line
-# Note: The 3rd statement may run when the 1st is true
+# Uma linha
+# Observação: a terceira instrução pode ser executada quando a primeira for verdadeira
 [[ $var == hello ]] && echo hi || echo bye
 [[ $var == hello ]] && { echo hi; echo there; } || echo bye
 
-# Multi line (no else, single statement)
-# Note: The exit status may not be the same as with an if statement
+# Várias linhas (sem else, instrução única)
+# Observação: o status de saída pode não ser o mesmo que em uma instrução if
 [[ $var == hello ]] &&
     echo hi
 
-# Multi line (no else)
+# Várias linhas (sem else)
 [[ $var == hello ]] && {
     echo hi
     # ...
 }
 ```
 
-## Simpler `case` statement to set variable
+## Declaração `case` mais simples para definir variável
 
-The `:` built-in can be used to avoid repeating `variable=` in a case statement. The `$_` variable stores the last argument of the last command. `:` always succeeds so it can be used to store the variable value.
+O comando interno `:` pode ser usado para evitar repetir `variable=` em uma declaração case. A variável `$_` armazena o último argumento do último comando. `:` sempre é bem-sucedido, então pode ser usado para armazenar o valor da variável.
 
 ```shell
-# Modified snippet from Neofetch.
+# Trecho modificado do Neofetch.
 case "$OSTYPE" in
     "darwin"*)
         : "MacOS"
@@ -1938,32 +1920,32 @@ case "$OSTYPE" in
     ;;
 esac
 
-# Finally, set the variable.
+# Por fim, defina a variável.
 os="$_"
 ```
 
 <!-- CHAPTER END -->
 
 <!-- CHAPTER START -->
-# OTHER
+# OUTROS
 
-## Use `read` as an alternative to the `sleep` command
+## Usar `read` como alternativa ao comando `sleep`
 
-Surprisingly, `sleep` is an external command and not a `bash` built-in.
+Surpreendentemente, `sleep` é um comando externo e não um comando interno (built-in) do `bash`.
 
-**CAVEAT:** Requires `bash` 4+
+**AVISO:** Requer `bash` 4+
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 read_sleep() {
-    # Usage: read_sleep 1
+    # Utilização: read_sleep 1
     #        read_sleep 0.2
     read -rt "$1" <> <(:) || :
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 read_sleep 1
@@ -1971,96 +1953,96 @@ read_sleep 0.1
 read_sleep 30
 ```
 
-For performance-critical situations, where it is not economic to open and close an excessive number of file descriptors, the allocation of a file descriptor may be done only once for all invocations of `read`:
+Para situações críticas de desempenho, onde não é econômico abrir e fechar um número excessivo de descritores de arquivo, a alocação de um descritor de arquivo pode ser feita apenas uma vez para todas as invocações de `read`:
 
-(See the generic original implementation at https://blog.dhampir.no/content/sleeping-without-a-subprocess-in-bash-and-how-to-sleep-forever)
+(Veja a implementação original genérica em https://blog.dhampir.no/content/sleeping-without-a-subprocess-in-bash-and-how-to-sleep-forever)
 
 ```shell
 exec {sleep_fd}<> <(:)
 while some_quick_test; do
-    # equivalent of sleep 0.001
+    # equivalente a sleep 0.001
     read -t 0.001 -u $sleep_fd
 done
 ```
 
-## Check if a program is in the user's PATH
+## Verificar se um programa está no PATH do usuário
 
 ```shell
-# There are 3 ways to do this and either one can be used.
+# Existem três maneiras de fazer isso e qualquer uma delas pode ser usada.
 type -p executable_name &>/dev/null
 hash executable_name &>/dev/null
 command -v executable_name &>/dev/null
 
-# As a test.
+# Como teste.
 if type -p executable_name &>/dev/null; then
     # Program is in PATH.
 fi
 
-# Inverse.
+# Inverso.
 if ! type -p executable_name &>/dev/null; then
     # Program is not in PATH.
 fi
 
-# Example (Exit early if program is not installed).
+# Exemplo (Saia antecipadamente se o programa não estiver instalado).
 if ! type -p convert &>/dev/null; then
     printf '%s\n' "error: convert is not installed, exiting..."
     exit 1
 fi
 ```
 
-## Get the current date using `strftime`
+## Obter a data atual usando `strftime`
 
-Bash’s `printf` has a built-in method of getting the date which can be used in place of the `date` command.
+O `printf` do Bash tem um método nativo de obter a data que pode ser usado no lugar do comando `date`.
 
-**CAVEAT:** Requires `bash` 4+
+**AVISO:** Requer `bash` 4+
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 date() {
-    # Usage: date "format"
-    # See: 'man strftime' for format.
+    # Utilização: data “formato”
+    # Consulte: ‘man strftime’ para obter informações sobre o formato.
     printf "%($1)T\\n" "-1"
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
-# Using above function.
+# Usando a função acima.
 $ date "%a %d %b  - %l:%M %p"
 Fri 15 Jun  - 10:00 AM
 
-# Using printf directly.
+# Usando printf diretamente.
 $ printf '%(%a %d %b  - %l:%M %p)T\n' "-1"
 Fri 15 Jun  - 10:00 AM
 
-# Assigning a variable using printf.
+# Atribuir uma variável usando printf.
 $ printf -v date '%(%a %d %b  - %l:%M %p)T\n' '-1'
 $ printf '%s\n' "$date"
 Fri 15 Jun  - 10:00 AM
 ```
 
-## Get the username of the current user
+## Obter o nome de usuário do usuário atual
 
-**CAVEAT:** Requires `bash` 4.4+
+**AVISO:** Requer `bash` 4.4+
 
 ```shell
 $ : \\u
-# Expand the parameter as if it were a prompt string.
+# Expanda o parâmetro como se fosse uma string de prompt.
 $ printf '%s\n' "${_@P}"
 black
 ```
 
-## Generate a UUID V4
+## Gerar um UUID V4
 
-**CAVEAT**: The generated value is not cryptographically secure.
+**AVISO**: O valor gerado não é criptograficamente seguro.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 uuid() {
-    # Usage: uuid
+    # Utilização: uuid
     C="89ab"
 
     for ((N=0;N<16;++N)); do
@@ -2084,28 +2066,27 @@ uuid() {
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 $ uuid
 d5b6c731-1310-4c24-9fe3-55d556d44374
 ```
 
-## Progress bars
+## Barras de progresso
 
-This is a simple way of drawing progress bars without needing a for loop
-in the function itself.
+Esta é uma maneira simples de desenhar barras de progresso sem precisar de um loop for na própria função.
 
-**Example Function:**
+**Exemplo de Função:**
 
 ```sh
 bar() {
-    # Usage: bar 1 10
-    #            ^----- Elapsed Percentage (0-100).
-    #               ^-- Total length in chars.
+    # Utilização: barra 1 10
+    #                   ^----- Porcentagem decorrida (0-100).
+    #                      ^-- Comprimento total em caracteres.
     ((elapsed=$1*$2/100))
 
-    # Create the bar with spaces.
+    # Crie a barra com espaços.
     printf -v prog  "%${elapsed}s"
     printf -v total "%$(($2-elapsed))s"
 
@@ -2113,68 +2094,68 @@ bar() {
 }
 ```
 
-**Example Usage:**
+**Exemplo de Uso:**
 
 ```shell
 for ((i=0;i<=100;i++)); do
-    # Pure bash micro sleeps (for the example).
+    # Pausas bem curtas em bash puro (só para ilustrar).
     (:;:) && (:;:) && (:;:) && (:;:) && (:;:)
 
-    # Print the bar.
+    # Imprima a barra.
     bar "$i" "10"
 done
 
 printf '\n'
 ```
 
-## Get the list of functions in a script
+## Obter a lista de funções em um script
 
 ```sh
 get_functions() {
-    # Usage: get_functions
+    # Utilização: get_functions
     IFS=$'\n' read -d "" -ra functions < <(declare -F)
     printf '%s\n' "${functions[@]//declare -f }"
 }
 ```
 
-## Bypass shell aliases
+## Ignorar aliases do shell
 
 ```shell
-# alias
+# caso contrário
 ls
 
-# command
+# comando
 # shellcheck disable=SC1001
 \ls
 ```
 
-## Bypass shell functions
+## Ignorar funções do shell
 
 ```shell
-# function
+# função
 ls
 
-# command
+# comando
 command ls
 ```
 
-## Run a command in the background
+## Executar um comando em segundo plano (background)
 
-This will run the given command and keep it running, even after the terminal or SSH connection is terminated. All output is ignored.
+Isso executará o comando fornecido e o manterá em execução, mesmo após o término da conexão do terminal ou SSH. Toda a saída é ignorada.
 
 ```sh
 bkr() {
     (nohup "$@" &>/dev/null &)
 }
 
-bkr ./some_script.sh # some_script.sh is now running in the background
+bkr ./some_script.sh # some_script.sh está agora em execução em segundo plano
 ```
 
-## Capture the return value of a function without command substitution
+## Capturar o valor de retorno de uma função sem substituição de comando
 
-**CAVEAT:** Requires `bash` 4+
+**AVISO:** Requer `bash` 4+
 
-This uses local namerefs to avoid using `var=$(some_func)` style command substitution for function output capture.
+Isso usa namerefs locais para evitar o uso de substituição de comando no estilo `var=$(alguma_func)` para capturar a saída da função.
 
 ```sh
 to_upper() {
@@ -2190,9 +2171,9 @@ printf "%s\n" "${foo}" # BAR
 
 <!-- CHAPTER END -->
 
-# AFTERWORD
+# POSFÁCIO
 
-Thanks for reading! If this bible helped you in any way and you'd like to give back, consider donating. Donations give me the time to make this the best resource possible. Can't donate? That's OK, star the repo and share it with your friends!
+Obrigado por ler! Se esta bíblia ajudou você de alguma forma e você gostaria de retribuir, considere fazer uma doação. Doações me dão tempo para tornar este o melhor recurso possível. Não pode doar? Tudo bem, dê uma estrela no repositório e compartilhe com seus amigos!
 
 <a href="https://www.patreon.com/dyla"><img src="https://img.shields.io/badge/donate-patreon-yellow.svg"></a>
 
