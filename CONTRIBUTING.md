@@ -1,52 +1,51 @@
-# Writing the Bible
+# Escrevendo a Bíblia
 
 <!-- vim-markdown-toc GFM -->
 
-* [Adding Code to the Bible.](#adding-code-to-the-bible)
-* [Special meanings for code blocks.](#special-meanings-for-code-blocks)
-* [Writing tests](#writing-tests)
-* [Running tests](#running-tests)
+* [Adicionando Código à Bíblia.](#adding-code-to-the-bible)
+* [Significados especiais para blocos de código.](#special-meanings-for-code-blocks)
+* [Escrevendo testes](#writing-tests)
+* [Executando testes](#running-tests)
 
 <!-- vim-markdown-toc -->
 
-## Adding Code to the Bible.
+## Adicionando Código à Bíblia.
 
-- The code must use only `bash` built-ins.
-    - A fallback to an external program is allowed if the code doesn't
-      always work.
-    - Example Fallback: `${HOSTNAME:-$(hostname)}`
-- If possible, wrap the code in a function.
-    - This allows tests to be written.
-    - It also allows `shellcheck` to properly lint it.
-    - An added bonus is showing a working use-case.
-- Write some examples.
-    - Show some input and the modified output.
+- O código deve usar apenas comandos internos (built-ins) do `bash`.
+    - Um fallback (alternativa) para um programa externo é permitido se o código não funcionar sempre.
+    - Exemplo de Fallback: `${HOSTNAME:-$(hostname)}`
+- Se possível, envolva o código em uma função.
+    - Isso permite que testes sejam escritos.
+    - Isso também permite que o `shellcheck` faça a análise estática (lint) corretamente.
+    - Um bônus adicional é mostrar um caso de uso funcional.
+- Escreva alguns exemplos.
+    - Mostre alguma entrada e a saída modificada.
 
 
-## Special meanings for code blocks.
+## Significados especiais para blocos de código.
 
-Use `sh` for functions that should be linted and unit tested.
+Use `sh` para funções que devem ser analisadas (linted) e testadas unitariamente.
 
     ```sh
-    # Shellcheck will lint this and the test script will source this.
+    # O Shellcheck irá verificar isso e o script de teste irá originar isso.
     func() {
-        # Usage: func "arg"
+        # Utilização: func “arg”
         :
     }
     ```
 
-Use `shell` for code that should be ignored.
+Use `shell` para código que deve ser ignorado.
 
     ```shell
-    # Shorter file creation syntax.
+    # Sintaxe mais curta para criação de arquivos.
     :>file
     ```
 
-## Writing tests
+## Escrevendo testes
 
-The test file is viewable here: https://github.com/dylanaraps/pure-bash-bible/blob/master/test.sh
+O arquivo de teste pode ser visualizado aqui: https://github.com/dylanaraps/pure-bash-bible/blob/master/test.sh
 
-Example test:
+Exemplo de teste:
 
 ```sh
 test_upper() {
@@ -55,19 +54,18 @@ test_upper() {
 }
 ```
 
-Steps:
+Passos:
 
-1. Write the test.
-    - Naming is `test_func_name`
-    - Store the function output in a variable (`$result` or `${result[@]}`).
-    - Use `assert_equals` to test equality between the variable and the
-      expected output.
-2. The test script will automatically execute it. :+1:
+1. Escreva o teste.
+    - A nomenclatura é `test_func_name`
+    - Armazene a saída da função em uma variável (`$result` ou `${result[@]}`).
+    - Use `assert_equals` para testar a igualdade entre a variável e a saída esperada.
+2. O script de teste o executará automaticamente. :+1:
 
 
-## Running tests
+## Executando testes
 
-Running `test.sh` also runs `shellcheck` on the code.
+Executar o `test.sh` também roda o `shellcheck` no código.
 
 ```sh
 cd pure-bash-bible
