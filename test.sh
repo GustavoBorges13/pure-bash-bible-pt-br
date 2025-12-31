@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck source=/dev/null disable=2178,2128
 #
-# Tests for the Pure Bash Bible.
+# Testes para a Bíblia do Pure Bash.
 
 test_trim_string() {
     result="$(trim_string "    Hello,    World    ")"
@@ -221,21 +221,21 @@ assert_equals() {
 main() {
     trap 'rm readme_code test_file' EXIT
 
-    # Extract code blocks from the README.
+    # Extraia blocos de código do README.
     while IFS=$'\n' read -r line; do
         [[ "$code" && "$line" != \`\`\` ]] && printf '%s\n' "$line"
         [[ "$line" =~ ^\`\`\`sh$ ]] && code=1
         [[ "$line" =~ ^\`\`\`$ ]]   && code=
     done < README.md > readme_code
 
-    # Run shellcheck and source the code.
+    # Execute o shellcheck e carregue o código.
     shellcheck -s bash readme_code test.sh build.sh || exit 1
     . readme_code
 
     head="-> Running tests on the Pure Bash Bible.."
     printf '\n%s\n%s\n' "$head" "${head//?/-}"
 
-    # Generate the list of tests to run.
+    # Gerar a lista de testes a serem executados.
     IFS=$'\n' read -d "" -ra funcs < <(declare -F)
     for func in "${funcs[@]//declare -f }"; do
         [[ "$func" == test_* ]] && "$func";
@@ -244,7 +244,7 @@ main() {
     comp="Completed $((fail+pass)) tests. ${pass:-0} passed, ${fail:-0} failed."
     printf '%s\n%s\n\n' "${comp//?/-}" "$comp"
 
-    # If a test failed, exit with '1'.
+    # Se um teste falhar, saia com ‘1’.
     ((fail>0)) || exit 0 && exit 1
 }
 
